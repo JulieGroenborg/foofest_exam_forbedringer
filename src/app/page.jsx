@@ -45,7 +45,7 @@ export default function Home() {
           </p>
           <Image src={campingPic} alt="Picture of the Sveitheim campingspot" className="md:h-96 md:w-auto md:justify-self-start md:mb-8" />
           <p className="md:text-3xl mb-8">
-            <span className="landing_span italic">FooooFest</span> is more than an event. It´s a celebration of the connection between music, nature, and people in the middle of the North Atlantic.
+            <span className="landing_span italic">FooFest</span> is more than an event. It´s a celebration of the connection between music, nature, and people in the middle of the North Atlantic.
           </p>
         </section>
         <HeaderTwo page="Tickets" />

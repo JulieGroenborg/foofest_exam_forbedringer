@@ -36,6 +36,10 @@ export default function Dob({ day, month, year }) {
             type="text"
             maxLength="2"
             onChange={changeFocus}
+            // FORBEDRING---------------
+            pattern="[0-9]+"
+            title="Only numeric characters"
+            // -----------------------
           />
         </div>
         <div className="flex flex-col shrink mb-6 mt-1 w-1/4">
@@ -51,13 +55,28 @@ export default function Dob({ day, month, year }) {
             maxLength="2"
             ref={monthRef}
             onChange={changeFocus}
+            // FORBEDRING---------------
+            pattern="[0-9]+"
+            title="Only numeric characters"
+            // -----------------------
           />
         </div>
         <div className="flex flex-col shrink mb-6 mt-1 w-2/4">
           <label className="text-[var(--secondary-color)] w-fit semibold text-[#c1bebe]" htmlFor="year">
             YEAR
           </label>
-          <input className="w-full bg-[var(--primary-color)] outline-1 text-[var(--secondary-color)] p-4 outline focus:outline-[3px] outline-[var(--accent-color)]" id="year" placeholder="YYYY" name={year} type="text" maxLength="4" ref={yearRef} />
+          <input
+            className="w-full bg-[var(--primary-color)] outline-1 text-[var(--secondary-color)] p-4 outline focus:outline-[3px] outline-[var(--accent-color)]"
+            id="year"
+            placeholder="YYYY"
+            name={year}
+            type="text"
+            maxLength="4"
+            ref={yearRef} // FORBEDRING---------------
+            pattern="[0-9]+"
+            title="Only numeric characters"
+            // -----------------------
+          />
         </div>
       </div>
     </>

@@ -17,6 +17,15 @@ import Cardinfo from "@/components/Cardinfo";
 import Spinner from "@/components/Spinner";
 import FiveTimer from "@/components/FiveTimer";
 
+//FORBEDRING: stepper fra antD--------------------------------------
+// import { ConfigProvider, Steps } from "antd";
+// const Step = Steps.Step;
+//---------------------------------------------------------
+
+//FORBEDRING: stepper lavet selv--------------------------------------
+
+//---------------------------------------------------------
+
 export default function Home() {
   //metode til at få vist "flere sider" ligesom i matasquizzen
   const [visible, setVisible] = useState(1);
@@ -41,7 +50,7 @@ export default function Home() {
   // Dette objekt, bliver objektet der sendes i PUT-requesten
   let putDataObj = {};
 
-  //Dette array skal holde styr på, hvor mange tickets der er bestilt, så vi til sidst kan map'e over antallet  og tildele korrekt antal telte (hvis man vælger "CREW TENTS" samt lave x antal "ekstra tickets".
+  //Dette array skal holde styr på, hvor mange tickets der er bestilt, så vi til sidst kan map'e over antallet  {niks: og tildele korrekt antal telte (hvis man vælger "CREW TENTS"} samt lave x antal "ekstra tickets".
   //   Der bliver tilføjer "ticket" til arrayet
   const [ticketArray, setTicketArray] = useState([]);
   // console.log(ticketArray);
@@ -326,9 +335,69 @@ export default function Home() {
 
   return (
     <Layout current="Tickets">
-      {(visible === 3 || visible === 4 || visible === 5) && (
+      {/* FORBEDRING: ønsker at kunne placere stepper-koden ét sted fremfor at gentage kode. Det samme gælder for HeaderTwo -----------------------*/}
+      {(visible === 1 || visible === 2 || visible === 3 || visible === 4 || visible === 5) && (
         <>
           <HeaderTwo page="Checkout"></HeaderTwo>
+          {/* FORBEDRING: stepper fra antD--------------------------- */}
+          {/* <div className="hidden lg:block">
+            <ConfigProvider theme={{ token: { colorPrimary: "#777777", colorTextBase: "#cbcbcb", colorText: "#f6f1f1", colorTextDescription: "#cbcbcb87", colorBorderSecondary: "#565656" } }}>
+              <Steps className="bg-[#c4ef1a14] p-4" size="small" current={visible - 1}>
+                <Step title="TICKETS" />
+                <Step title="CAMPINGSPOTS" />
+                <Step title="TENT OPTIONS" />
+                <Step title="INFORMATIONS" />
+                <Step title="PAYMENT" />
+              </Steps>
+            </ConfigProvider>
+          </div> */}
+          {/* --------------------------------------------- */}
+          {/* FORBEDRING: stepper lavet selv--------------------------- */}
+          {/* For at give brugeren mulighed for et overblik, har jeg lavet en stepper, som viser, hvor langt i købsflowet, brugeren befinder sig. Jeg genbruger værdierne fra vores visible-state, og vælger at ændre stroke/fill. Vi ved at første cirkel altid skal være hvid, og så snart vi klikker next, ved vi at state er 2, og derfor kan vi sige at hvis visible er større end 1, så skal den ændre farven til hvid. Og så fremdeles */}
+          <div className="flex items-center justify-center">
+            <svg width="32" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="9.5" cy="9.5" r="9.5" fill="#F3F3F3" />
+            </svg>
+
+            <svg width="301" height="2" viewBox="0 0 301 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line y1="1" x2="301" y2="1" stroke={visible > 1 ? "#F3F3F3" : "#666666"} strokeWidth="2" />
+            </svg>
+
+            <svg width="32" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="9.5" cy="9.5" r="9.5" fill={visible > 1 ? "#F3F3F3" : "#666666"} />
+            </svg>
+
+            <svg width="301" height="2" viewBox="0 0 301 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line y1="1" x2="301" y2="1" stroke={visible > 2 ? "#F3F3F3" : "#666666"} strokeWidth="2" />
+            </svg>
+
+            <svg width="32" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="9.5" cy="9.5" r="9.5" fill={visible > 2 ? "#F3F3F3" : "#666666"} />
+            </svg>
+
+            <svg width="301" height="2" viewBox="0 0 301 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line y1="1" x2="301" y2="1" stroke={visible > 3 ? "#F3F3F3" : "#666666"} strokeWidth="2" />
+            </svg>
+
+            <svg width="32" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="9.5" cy="9.5" r="9.5" fill={visible > 3 ? "#F3F3F3" : "#666666"} />
+            </svg>
+
+            <svg width="301" height="2" viewBox="0 0 301 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line y1="1" x2="301" y2="1" stroke={visible > 4 ? "#F3F3F3" : "#666666"} strokeWidth="2" />
+            </svg>
+
+            <svg width="32" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="9.5" cy="9.5" r="9.5" fill={visible > 4 ? "#F3F3F3" : "#666666"} />
+            </svg>
+          </div>
+          {/* --------------------------------------------- */}
+        </>
+      )}
+      {/* ------------------------------------------------------- */}
+
+      {(visible === 3 || visible === 4 || visible === 5) && (
+        <>
           <FiveTimer />
         </>
       )}
@@ -336,8 +405,8 @@ export default function Home() {
         // I denne section har vi ikke noget form-tag, da vi ikke bruger inputfelter på den første "side". Derimod samler vi data i et object, når der klikkes next
         <section className="md:relative">
           <Spinner spinnerDisplay={spinnerDisplay} />
-          <HeaderTwo page="Checkout"></HeaderTwo>
-          <h3>CHOOSE TICKETS</h3>
+
+          <h3 className="mt-16">CHOOSE TICKETS</h3>
           <div className="w-full h-fit md:grid md:grid-cols-2 md:gap-8">
             <div className="outline outline-[var(--accent-color)] outline-1 p-5 md:p-6 md:py-12 mb-12 w-full h-fit">
               <div className="grid grid-cols-4 place-items-center mb-8 md:mb-10">
@@ -346,9 +415,12 @@ export default function Home() {
                   //sender en prop ned til Plusminus. Funktionen vil add' et tal til 'regular ticket'
                   updateTicketAdd={function updateTickets() {
                     {
+                      // JULIES KOMMENTAR: ved klik på "+" opdatere/set'er ticket-statet. Vi sørger for, at forholde os til den gamle værdi af 'ticket' (old) ved brug af arrow function, så spreader vi og får derved en kopi af objektet og add'er 1.
                       setTicket((old) => ({ ...old, regular: old.regular + 1 }));
                       // KOMMENTAR ved klik tilføjes "ticket" til ticketArray.
+                      // JULIES KOMMENTAR: ved klik på "+", så opdaterer/set'er vi TicketArray-statet. Vi sørger for at forholde os til den gamle værdi af ticketArray ((oldArray)), og bruger en arrow function samt spread operator til at skabe en ny kopi af array'et samt tilføje the string "ticket" til enden af array'et.
                       setTicketArray((oldArray) => [...oldArray, "ticket"]);
+                      // JULIES KOMMENTAR: disse setHidden for Plusminus er irrelevante, da statet allerede pre-settes. Det er blot vigtigt at setHidden, når den skal ændres til false (som nede på onClick)
                       setHidden(true); //Fjerner alert message
                     }
                   }}
@@ -419,8 +491,7 @@ export default function Home() {
       )}
       {visible === 2 && (
         <section>
-          <HeaderTwo page="Checkout"></HeaderTwo>
-          <h3>CHOOSE CAMPINGSPOT</h3>
+          <h3 className="mt-16">CHOOSE CAMPINGSPOT</h3>
           <form action={validateCampspot} className="w-full h-fit md:grid md:grid-cols-2 md:gap-8">
             <div className="sm:grid sm:grid-cols-2 sm:gap-8 md:grid-cols-1 xl:grid-cols-2">
               <RadioBtn spotsAvail={spotsAvail} chosenSpot={chosenSpot} setChosenSpot={setChosenSpot} name="campspots" id="Svartheim" text="SVARTHEIM" ticketAmount={ticketAmount}></RadioBtn>
@@ -438,7 +509,7 @@ export default function Home() {
       )}
       {visible === 3 && (
         <section className="md:relative grid">
-          <h3>CHOOSE A TENT OPTION</h3>
+          <h3 className="mt-3">CHOOSE A TENT OPTION</h3>
           <form action={validateTent} className="w-full h-fit md:grid md:grid-cols-2 md:gap-8">
             <div>
               <TentRadioBtnOne name="tentoption" id="CrewTents" text="CREW TENTS" beregnTelte={beregnTelte} tentOption={tentOption} setTentOption={setTentOption}></TentRadioBtnOne>
@@ -455,7 +526,7 @@ export default function Home() {
       )}
       {visible === 4 && (
         <section className="grid">
-          <h3>PERSONAL INFORMATION</h3>
+          <h3 className="mt-3">PERSONAL INFORMATION</h3>
 
           <form onSubmit={addPersonalInfo} className="w-full h-fit md:grid md:grid-cols-2 md:gap-8">
             <div>
@@ -472,12 +543,52 @@ export default function Home() {
                   YOUR INFORMATION
                 </div>
                 <div className="collapse-content">
-                  <Labelinput id="firstname" inputname="firstname" type="text" label="FIRSTNAME" placeholder="EX. PETER"></Labelinput>
-                  <Labelinput id="lastname" inputname="lastname" type="text" label="LASTNAME" placeholder="EX. THOMSON"></Labelinput>
+                  <Labelinput
+                    id="firstname"
+                    inputname="firstname"
+                    type="text"
+                    label="FIRSTNAME"
+                    placeholder="EX. PETER"
+                    // FORBEDRING---------------
+                    pattern="\p{L}+"
+                    title="Only alphabetic characters"
+                    // -----------------------
+                  ></Labelinput>
+                  <Labelinput
+                    id="lastname"
+                    inputname="lastname"
+                    type="text"
+                    label="LASTNAME"
+                    placeholder="EX. THOMSON"
+                    // FORBEDRING---------------
+                    pattern="\p{L}+"
+                    title="Only alphabetic characters"
+                    // -----------------------
+                  ></Labelinput>
                   <Dob day="day" month="month" year="year"></Dob>
                   <Labelinput id="adress" inputname="adress" type="text" label="ADRESS" placeholder="EX. STENSTYKKEVEJ, 62"></Labelinput>
-                  <Labelinput id="zipcode" inputname="zipcode" type="text" label="ZIPCODE" placeholder="EX. 2650"></Labelinput>
-                  <Labelinput id="city" inputname="city" type="text" label="CITY" placeholder="EX. HVIDOVRE"></Labelinput>
+                  <Labelinput
+                    id="zipcode"
+                    inputname="zipcode"
+                    type="text"
+                    label="ZIPCODE"
+                    placeholder="EX. 2650"
+                    // FORBEDRING---------------
+                    pattern="[0-9]+"
+                    title="Only numeric characters"
+                    // -----------------------
+                  ></Labelinput>
+                  <Labelinput
+                    id="city"
+                    inputname="city"
+                    type="text"
+                    label="CITY"
+                    placeholder="EX. HVIDOVRE"
+                    // FORBEDRING---------------
+                    pattern="[A-Za-z]+"
+                    title="Only alphabetic characters"
+                    // -----------------------
+                  ></Labelinput>
                   <Labelinput id="email" inputname="email" type="email" label="EMAIL" placeholder="EX. THOMSON@HOTMAIL.COM"></Labelinput>
                   <Labelinput id="telephone" inputname="telephone" type="text" label="TELEPHONE NR." placeholder="EX. 12233445"></Labelinput>
                 </div>
@@ -497,7 +608,7 @@ export default function Home() {
       )}
       {visible === 5 && (
         <section className="grid">
-          <h3>CHOOSE PAYMENT</h3>
+          <h3 className="mt-3">CHOOSE PAYMENT</h3>
           <form action={validatePayment} className="w-full h-fit md:grid md:grid-cols-2 md:gap-8">
             <Cardinfo></Cardinfo>
             <div className="w-full md:w-full justify-self-end md:sticky md:top-6 md:h-fit">
