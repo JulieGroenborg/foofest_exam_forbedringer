@@ -193,6 +193,7 @@ export default function Home() {
     //Her sørger vi for (ved hver const) at fange/get (PERSONAL INFORMATION) inputfeltets data. Efterfølgende putter vi det ind i vores dataObj (objekt)
 
     //denne er nødvendig fordi vi bruger onSubmit og ikke action
+    //JULIES KOMMENTAR: evt.target = refererer til dét target element som har triggeret eventet (form'en)
     const formData = new FormData(evt.target);
 
     const firstname = formData.get("firstname");
