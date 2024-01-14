@@ -168,6 +168,7 @@ export default function Home() {
   //For at vide hvor mange ekstra personer, der er udover køberen selv, skal vi fjerne én billet fra det samlede antal billetter (i ticketArray) med pop.
   // Så har vi et array med et antal items, der passer til antallet af ekstra personer udover køberen.
   // Vi laver lige en kopi i stedet for at modificere det originale array
+  // JULIES KOMMENTAR: dette laver ikke en kopi. Dette modificerer det originale. Man kunne bruge spread-operator like so, hvis man ønsker en kopi: let copyTicketArray = [...ticketArray];
   let copyTicketArray = ticketArray;
 
   //Da DaisyUI´s collapse ikke automatisk gør det muligt at tab sig ind i dens indhold, skal vi tvinge det frem
@@ -223,6 +224,8 @@ export default function Home() {
 
     const telephone = formData.get("telephone");
     dataObj.telephone = telephone;
+    // JULIES KOMMENTAR: hvis objektets opbygning
+    console.log("dette er dataObj", dataObj);
 
     // KOMMENTAR //Kalder submitEkstraValues(evt)
     if (ticketAmount > 1) {
@@ -420,7 +423,6 @@ export default function Home() {
                       // KOMMENTAR ved klik tilføjes "ticket" til ticketArray.
                       // JULIES KOMMENTAR: ved klik på "+", så opdaterer/set'er vi TicketArray-statet. Vi sørger for at forholde os til den gamle værdi af ticketArray ((oldArray)), og bruger en arrow function samt spread operator til at skabe en ny kopi af array'et samt tilføje the string "ticket" til enden af array'et.
                       setTicketArray((oldArray) => [...oldArray, "ticket"]);
-                      // JULIES KOMMENTAR: disse setHidden for Plusminus er irrelevante, da statet allerede pre-settes. Det er blot vigtigt at setHidden, når den skal ændres til false (som nede på onClick)
                       setHidden(true); //Fjerner alert message
                     }
                   }}
@@ -428,7 +430,7 @@ export default function Home() {
                   updateTicketSubstract={function updateTickets() {
                     {
                       setTicket((old) => ({ ...old, regular: old.regular - 1 }));
-                      // KOMMENTAR slice(0, -1) sørger for at fjerne det sidste item i arrayet
+                      // KOMMENTAR slice(0, -1) sørger for at fjerne det sidste item i arrayet (og laver ny copy)
                       setTicketArray((oldArray) => oldArray.slice(0, -1));
                       setHidden(true);
                     }
